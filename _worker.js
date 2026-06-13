@@ -68,18 +68,62 @@ async function handleAPI(request, env) {
   // Debug
   const url = new URL(request.url);
   if (request.method === 'GET' && url.pathname === '/debug') {
+    const debug = {};
     try {
-      if (!env.FEISHU_APP_ID) return new Response(JSON.stringify({ error: 'FEISHU_APP_ID 未配置' }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-      const token = await getAccessToken(env);
-      const resp = await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${env.FEISHU_APP_TOKEN}/tables/${env.FEISHU_TABLE_ID}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      // Step 1: 检查环境变量
+      debug.env = {
+        FEISHU_APP_ID: env.FEISHU_APP_ID ? env.FEISHU_APP_ID.substring(0, 8) + '***' : 'MISSING',
+        FEISHU_APP_SECRET: env.FEISHU_APP_SECRET ? '***已配置***' : 'MISSING',
+        FEISHU_APP_TOKEN: env.FEISHU_APP_TOKEN || 'MISSING',
+        FEISHU_TABLE_ID: env.FEISHU_TABLE_ID || 'MISSING'
+      };
+
+      if (!env.FEISHU_APP_ID || !env.FEISHU_APP_SECRET || !env.FEISHU_APP_TOKEN || !env.FEISHU_TABLE_ID) {
+        return new Response(JSON.stringify(debug), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Step 2: 获取 token
+      const tokenResp = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ app_id: env.FEISHU_APP_ID, app_secret: env.FEISHU_APP_SECRET })
       });
-      const data = await resp.json();
-      return new Response(JSON.stringify({ token_ok: true, table: data }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      debug.token_step = { http_status: tokenResp.status };
+      const tokenText = await tokenResp.text();
+      try {
+        const tokenData = JSON.parse(tokenText);
+        debug.token_step.code = tokenData.code;
+        debug.token_step.msg = tokenData.msg;
+        if (tokenData.code === 0) {
+          debug.token_step.success = true;
+          debug.token_step.expire = tokenData.expire;
+
+          // Step 3: 测试表格访问
+          const tableResp = await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${env.FEISHU_APP_TOKEN}/tables/${env.FEISHU_TABLE_ID}`, {
+            headers: { Authorization: `Bearer ${tokenData.tenant_access_token}` }
+          });
+          debug.table_step = { http_status: tableResp.status };
+          const tableText = await tableResp.text();
+          try {
+            const tableData = JSON.parse(tableText);
+            debug.table_step.code = tableData.code;
+            debug.table_step.msg = tableData.msg;
+          } catch (e) {
+            debug.table_step.raw = tableText.substring(0, 300);
+          }
+        }
+      } catch (e) {
+        debug.token_step.raw = tokenText.substring(0, 300);
+      }
+
+      return new Response(JSON.stringify(debug, null, 2), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8' }
       });
     } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), {
+      debug.error = e.message;
+      return new Response(JSON.stringify(debug), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
