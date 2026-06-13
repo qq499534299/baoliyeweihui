@@ -438,6 +438,34 @@ body {
   line-height: 1.7;
 }
 
+/* === Group Info === */
+.group-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  background: #F0FFF4;
+  border: 1px solid #B7E4C7;
+  border-radius: var(--radius);
+}
+
+.group-info-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.group-info p {
+  font-size: 15px;
+  color: #2D6A4F;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.group-info strong {
+  color: #1B4332;
+}
+
 /* === Form === */
 .signup-form {
   background: var(--card-bg);
