@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="小区业委会成立宣传 - 共建美好家园">
-  <title>绿地中央墅C区 - 业委会成立倡议</title>
+  <title>保利溪湖林语 - 业委会成立倡议</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -18,9 +18,9 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-badge">🏘️ 绿地中央墅C区</div>
+    <div class="hero-badge">🏘️ 保利溪湖林语 I & II & III 期</div>
     <h1 class="hero-title">我们的家园<br>需要我们<span class="highlight">共同参与</span></h1>
-    <p class="hero-sub">成立业主委员会，让绿地中央墅C区变得更好</p>
+    <p class="hero-sub">成立业主委员会，让保利溪湖林语变得更好</p>
     <div class="hero-icons">
       <div class="hero-icon-item">🏠<span>维护权益</span></div>
       <div class="hero-icon-item">💰<span>公共收益</span></div>
@@ -180,12 +180,12 @@
   <section class="section" id="join">
     <div class="section-badge">✋</div>
     <h2 class="section-title">现在<br><span class="highlight">需要你的参与</span></h2>
-    <p class="cta-desc">留下联系方式，一起推动业委会成立。<br>你的信息仅用于业委会筹备，严格保密。</p>
+    <p class="cta-desc">扫码进群，一起推动业委会成立。<br>也可填写下方表单留下联系方式，全程保密。</p>
     <blockquote class="quote quote-cta">不积跬步，无以至千里；不积小流，无以成江海。<cite>—— 荀子</cite></blockquote>
 
-    <div class="group-info">
-      <div class="group-info-icon">💬</div>
-      <p>已有 <strong>270+ 位邻居</strong> 加入业主微信群，提交信息后我们将邀请您进群，一起推动业委会成立。</p>
+    <div class="qrcode-box">
+      <img class="qrcode-img" src="assets/qrcode.jpg" alt="业主微信群二维码">
+      <p>扫码加入业主微信群，已有 <strong>120+ 位邻居</strong> 在群里</p>
     </div>
 
     <form id="signup-form" class="signup-form">
@@ -195,16 +195,21 @@
       </div>
 
       <div class="form-group">
-        <label>楼栋 / 单元 / 门牌号 <span class="required">*</span></label>
+        <label>期数 / 楼栋 / 单元 / 门牌号 <span class="required">*</span></label>
         <div class="address-row">
-          <span class="address-prefix">C区</span>
+          <select id="phase" name="phase" required>
+            <option value="">请选择</option>
+            <option value="I期">I期</option>
+            <option value="II期">II期</option>
+            <option value="III期">III期</option>
+          </select>
           <input type="text" id="building" name="building" placeholder="楼栋">
           <span class="address-sep">栋</span>
           <input type="text" id="unit" name="unit" placeholder="单元" required>
           <span class="address-sep">单元</span>
           <input type="text" id="room" name="room" placeholder="门牌" required>
         </div>
-        <span class="form-hint">例如：C区 5栋 2单元 1506，方便按楼栋统计</span>
+        <span class="form-hint">例如：I期 5栋 2单元 1506，方便按楼栋统计</span>
       </div>
 
       <div class="form-group">
@@ -238,7 +243,7 @@
       <div class="form-success" id="form-success" style="display:none;">
         <div class="success-icon">✅</div>
         <h3>提交成功！</h3>
-        <p>感谢您的支持！<br>我们会尽快邀请您加入业主群（已有 270+ 邻居），<br>后续进展群内通知。</p>
+        <p>感谢您的支持！<br>我们会尽快与您沟通！<br>后续进展群内通知。</p>
       </div>
 
       <div class="form-error" id="form-error" style="display:none;">
@@ -249,7 +254,7 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>🏘️ 绿地中央墅C区 · 共建美好家园，从你我开始</p>
+    <p>🏘️ 保利溪湖林语 I & II & III期 · 共建美好家园，从你我开始</p>
     <p class="footer-note">本页面由小区热心业主发起 · 信息仅用于业委会筹备</p>
   </footer>
 
