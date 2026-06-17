@@ -67,7 +67,6 @@
     formError.style.display = 'none';
 
     var name = document.getElementById('name').value.trim();
-    var phase = document.getElementById('phase').value;
     var building = document.getElementById('building').value.trim();
     var unit = document.getElementById('unit').value.trim();
     var room = document.getElementById('room').value.trim();
@@ -75,7 +74,6 @@
     var willingnessEl = document.querySelector('input[name="willingness"]:checked');
 
     if (!name) { alert('请输入姓名'); return; }
-    if (!phase) { alert('请选择期数'); return; }
     if (!unit) { alert('请输入单元号'); return; }
     if (!room) { alert('请输入门牌号'); return; }
     if (!phone) { alert('请输入手机号码'); return; }
@@ -84,14 +82,13 @@
 
     var willingness = willingnessEl.value;
     var willingnessLabel = willingnessEl.parentNode.querySelector('.radio-label').textContent.trim();
-    var buildingFull = building ? phase + '-' + building : phase;
+    var buildingFull = building ? 'C区' + building : 'C区';
     var fullAddress = building
       ? buildingFull + '栋-' + unit + '单元-' + room
       : buildingFull + '-' + unit + '单元-' + room;
 
     var payload = {
       name: name,
-      phase: phase,
       building: buildingFull,
       unit: unit,
       room: room,

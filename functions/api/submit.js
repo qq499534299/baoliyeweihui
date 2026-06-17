@@ -12,7 +12,6 @@
 // 飞书字段名（必须与多维表格中的字段名完全一致）
 const FIELD_MAP = {
   name: '姓名',
-  phase: '期数',
   building: '楼栋',
   unit: '单元',
   room: '门牌号',
@@ -114,7 +113,6 @@ export async function onRequest(context) {
 
     const fields = {};
     fields[FIELD_MAP.name] = body.name;
-    fields[FIELD_MAP.phase] = body.phase || '';
     fields[FIELD_MAP.building] = body.building || '';
     fields[FIELD_MAP.unit] = body.unit;
     fields[FIELD_MAP.room] = body.room;
