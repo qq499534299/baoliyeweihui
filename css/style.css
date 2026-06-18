@@ -526,6 +526,12 @@ body {
 }
 
 /* Address Row */
+.address-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .address-row {
   display: flex;
   align-items: center;
@@ -535,10 +541,10 @@ body {
 .address-row input {
   flex: 1;
   min-width: 0;
-  padding: 12px 10px;
+  padding: 10px 8px;
   border: 1px solid #DDD0C0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text);
   background: #FAFAF7;
   text-align: center;
@@ -553,16 +559,16 @@ body {
 }
 
 .address-sep {
-  font-size: 14px;
+  font-size: 13px;
   color: #999;
   flex-shrink: 0;
 }
 
 .address-row select {
-  padding: 12px 8px;
+  padding: 10px 8px;
   border: 1px solid #DDD0C0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text);
   background: #FAFAF7;
   text-align: center;

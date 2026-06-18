@@ -196,18 +196,22 @@
 
       <div class="form-group">
         <label>期数 / 楼栋 / 单元 / 门牌号 <span class="required">*</span></label>
-        <div class="address-row">
-          <select id="phase" name="phase" required>
-            <option value="">请选择</option>
-            <option value="I期">I期</option>
-            <option value="II期">II期</option>
-            <option value="III期">III期</option>
-          </select>
-          <input type="text" id="building" name="building" placeholder="楼栋">
-          <span class="address-sep">栋</span>
-          <input type="text" id="unit" name="unit" placeholder="单元" required>
-          <span class="address-sep">单元</span>
-          <input type="text" id="room" name="room" placeholder="门牌" required>
+        <div class="address-rows">
+          <div class="address-row">
+            <select id="phase" name="phase" required>
+              <option value="">请选择</option>
+              <option value="I期">I期</option>
+              <option value="II期">II期</option>
+              <option value="III期">III期</option>
+            </select>
+            <input type="text" id="building" name="building" placeholder="楼栋">
+            <span class="address-sep">栋</span>
+          </div>
+          <div class="address-row">
+            <input type="text" id="unit" name="unit" placeholder="单元" required>
+            <span class="address-sep">单元</span>
+            <input type="text" id="room" name="room" placeholder="门牌" required>
+          </div>
         </div>
         <span class="form-hint">例如：I期 5栋 2单元 1506，方便按楼栋统计</span>
       </div>
