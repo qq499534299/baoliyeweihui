@@ -2,16 +2,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --red: #C41E3A;
-  --red-dark: #A01830;
-  --gold: #D4A853;
-  --gold-light: #F5E6C8;
-  --bg: #FFF8F0;
-  --bg-alt: #FFFBF7;
+  --primary: #0D7B6B;
+  --primary-dark: #095E52;
+  --accent: #7EB8A0;
+  --accent-light: #D0EBE5;
+  --bg: #F4F9F7;
+  --bg-alt: #FAFCFB;
   --text: #2D2D2D;
   --text-secondary: #666;
   --card-bg: #fff;
-  --border: #E8D5C4;
+  --border: #C8DDD5;
   --shadow: 0 2px 12px rgba(0,0,0,0.06);
   --radius: 12px;
 }
@@ -41,7 +41,7 @@ body {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 2px solid rgba(196, 30, 58, 0.3);
+  border: 2px solid rgba(13, 123, 107, 0.3);
   background: rgba(255, 255, 255, 0.9);
   font-size: 20px;
   cursor: pointer;
@@ -58,26 +58,26 @@ body {
 }
 
 .music-btn.playing {
-  border-color: var(--red);
-  background: var(--red);
+  border-color: var(--primary);
+  background: var(--primary);
   animation: musicPulse 2s infinite;
 }
 
 @keyframes musicPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(196, 30, 58, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(13, 123, 107, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(13, 123, 107, 0); }
 }
 
 /* === Hero === */
 .hero {
   text-align: center;
   padding: 48px 24px 32px;
-  background: linear-gradient(180deg, #FFF1E6 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, #E6F4F0 0%, var(--bg) 100%);
 }
 
 .hero-badge {
   display: inline-block;
-  background: var(--red);
+  background: var(--primary);
   color: #fff;
   padding: 6px 16px;
   border-radius: 20px;
@@ -95,7 +95,7 @@ body {
 }
 
 .highlight {
-  color: var(--red);
+  color: var(--primary);
   position: relative;
 }
 
@@ -106,7 +106,7 @@ body {
   left: 0;
   right: 0;
   height: 8px;
-  background: var(--gold-light);
+  background: var(--accent-light);
   z-index: -1;
   border-radius: 4px;
 }
@@ -175,9 +175,9 @@ body {
 
 .quote-hero {
   max-width: 280px;
-  color: var(--red);
-  background: #FFF5F5;
-  border: 1px solid #FDD;
+  color: var(--primary);
+  background: #F0FAF7;
+  border: 1px solid #C0E5DB;
   font-size: 16px;
 }
 
@@ -204,7 +204,7 @@ body {
 
 .section-badge {
   display: inline-block;
-  background: var(--red);
+  background: var(--primary);
   color: #fff;
   width: 36px;
   height: 36px;
@@ -325,7 +325,7 @@ body {
   font-size: 17px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: var(--red);
+  color: var(--primary);
 }
 
 .card p {
@@ -353,7 +353,7 @@ body {
   height: 40px;
   line-height: 40px;
   text-align: center;
-  background: var(--red);
+  background: var(--primary);
   color: #fff;
   border-radius: 10px;
   font-size: 14px;
@@ -411,7 +411,7 @@ body {
 
 .case-item {
   background: var(--card-bg);
-  border-left: 4px solid var(--gold);
+  border-left: 4px solid var(--accent);
   border-radius: 0 var(--radius) var(--radius) 0;
   padding: 16px 20px;
   box-shadow: var(--shadow);
@@ -438,32 +438,36 @@ body {
   line-height: 1.7;
 }
 
-/* === Group Info === */
-.group-info {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 20px;
-  padding: 16px 18px;
-  background: #F0FFF4;
-  border: 1px solid #B7E4C7;
+/* === QR Code === */
+.qrcode-box {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 24px 20px;
+  background: #fff;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
-.group-info-icon {
-  font-size: 24px;
-  flex-shrink: 0;
+.qrcode-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.group-info p {
-  font-size: 15px;
-  color: #2D6A4F;
+.qrcode-box p {
+  font-size: 14px;
+  color: var(--text-secondary);
   line-height: 1.7;
   margin: 0;
 }
 
-.group-info strong {
-  color: #1B4332;
+.qrcode-box strong {
+  color: var(--primary);
 }
 
 /* === Form === */
@@ -492,7 +496,7 @@ body {
 }
 
 .required {
-  color: var(--red);
+  color: var(--primary);
 }
 
 .form-group input[type="text"],
@@ -510,8 +514,8 @@ body {
 
 .form-group input:focus {
   outline: none;
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 123, 107, 0.1);
 }
 
 .form-hint {
@@ -544,8 +548,8 @@ body {
 
 .address-row input:focus {
   outline: none;
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 123, 107, 0.1);
 }
 
 .address-sep {
@@ -554,12 +558,26 @@ body {
   flex-shrink: 0;
 }
 
-.address-prefix {
+.address-row select {
+  padding: 12px 8px;
+  border: 1px solid #DDD0C0;
+  border-radius: 8px;
   font-size: 16px;
-  font-weight: 700;
-  color: var(--red);
+  color: var(--text);
+  background: #FAFAF7;
+  text-align: center;
   flex-shrink: 0;
-  padding: 12px 6px;
+  min-width: 72px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.2s;
+}
+
+.address-row select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 123, 107, 0.1);
 }
 
 /* Radio Group */
@@ -581,14 +599,14 @@ body {
 }
 
 .radio-item:has(input:checked) {
-  border-color: var(--red);
-  background: #FFF5F5;
+  border-color: var(--primary);
+  background: #F0FAF7;
 }
 
 .radio-item input[type="radio"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--red);
+  accent-color: var(--primary);
   margin-right: 10px;
   flex-shrink: 0;
 }
@@ -602,7 +620,7 @@ body {
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -615,7 +633,7 @@ body {
 
 .submit-btn:active {
   transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(196, 30, 58, 0.3);
+  box-shadow: 0 2px 8px rgba(13, 123, 107, 0.3);
 }
 
 .submit-btn:disabled {
