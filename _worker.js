@@ -50,8 +50,12 @@ export default {
     }
 
     // 微信校验文件（防止 SPA fallback 返回 index.html）
-    if (pathname === '/82421077846ac77623690f6482aa6872.txt') {
-      return new Response('6870a5ad1e6ca24b1febde005a1362517c20e482', {
+    const wxVerifyFiles = {
+      '/82421077846ac77623690f6482aa6872.txt': '6870a5ad1e6ca24b1febde005a1362517c20e482',
+      '/5b0589a5d893950e0de6b06751198e99.txt': '362827a6432647be7b8cf310b1387c11133113ab'
+    };
+    if (wxVerifyFiles[pathname]) {
+      return new Response(wxVerifyFiles[pathname], {
         headers: { 'Content-Type': 'text/plain; charset=utf-8' }
       });
     }
