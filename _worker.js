@@ -49,6 +49,13 @@ export default {
       return handleAPI(request, env);
     }
 
+    // 微信校验文件（防止 SPA fallback 返回 index.html）
+    if (pathname === '/82421077846ac77623690f6482aa6872.txt') {
+      return new Response('6870a5ad1e6ca24b1febde005a1362517c20e482', {
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+      });
+    }
+
     // 其他请求走静态文件
     return env.ASSETS.fetch(request);
   }
