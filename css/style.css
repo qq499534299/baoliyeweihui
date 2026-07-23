@@ -121,7 +121,18 @@ body {
   margin-bottom: 28px;
 }
 
-.hero-icons {
+.hero-slogan {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 28px;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  background: rgba(13, 123, 107, 0.05);
+}
   display: flex;
   justify-content: center;
   gap: 24px;
@@ -700,6 +711,348 @@ body {
 .footer-note {
   font-size: 12px !important;
   color: #CCC;
+}
+
+/* === Back Link === */
+.back-link {
+  display: inline-block;
+  margin: 16px 0 0 16px;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  background: #F0FAF7;
+  border: 1px solid #C0E5DB;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.back-link:active {
+  background: #D0EBE5;
+}
+
+/* === Hero Stats === */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.stat-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* === History Link === */
+.history-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  transition: background 0.2s;
+}
+
+.history-link:active {
+  background: #F0FAF7;
+}
+
+/* === Timeline === */
+.timeline {
+  position: relative;
+  padding-left: 36px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #D8E5E0;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -36px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.timeline-item.done .timeline-dot {
+  background: #27AE60;
+  box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.15);
+}
+
+.timeline-item.active .timeline-dot {
+  background: #2980B9;
+  box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.15);
+  animation: dotPulse 2s infinite;
+}
+
+.timeline-item.upcoming .timeline-dot {
+  background: #fff;
+  border: 2px solid #C0C8C0;
+}
+
+.dot-icon {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.timeline-item.upcoming .dot-icon {
+  color: #B0B8B0;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.15); }
+  50% { box-shadow: 0 0 0 12px rgba(41, 128, 185, 0); }
+}
+
+.timeline-content {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.timeline-item.active .timeline-content {
+  border-color: #2980B9;
+  background: #F0F7FC;
+}
+
+.timeline-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tag-done {
+  background: #E8F8E8;
+  color: #27AE60;
+}
+
+.tag-active {
+  background: #E8F0FA;
+  color: #2980B9;
+}
+
+.tag-upcoming {
+  background: #F0F0F0;
+  color: #999;
+}
+
+.notice-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: #FFF3E0;
+  color: #E67E22;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.timeline-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.timeline-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.timeline-item.upcoming .timeline-content h3 {
+  color: #999;
+}
+
+.timeline-item.upcoming .timeline-content p {
+  color: #BBB;
+}
+
+/* === Hero Slogan === */
+.hero-slogan {
+  font-size: 15px;
+  color: #B0A090;
+  font-style: italic;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* === Timeline Law === */
+.timeline-law {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #E0D8C8;
+  font-size: 13px !important;
+  color: #8B7355 !important;
+  line-height: 1.8 !important;
+}
+
+.timeline-law strong {
+  color: var(--primary);
+}
+
+.law-deadline {
+  display: inline-block;
+  background: #FFF0E0;
+  color: #C0392B;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* === Agenda List === */
+.agenda-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.agenda-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.agenda-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.agenda-content h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.agenda-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* === Multiple History Links === */
+.history-link + .history-link {
+  margin-top: 10px;
+}
+
+/* === Notice List === */
+.notice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.notice-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.notice-marker {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  background: #FFF3E0;
+  color: #E67E22;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid #F0D0A0;
+}
+
+.notice-body {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  border: 1px solid #E8E0D5;
+  position: relative;
+}
+
+.notice-body h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.notice-body p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.notice-law {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 8px;
+  background: #F0F0F0;
+  color: #999;
+  font-size: 12px;
+  border-radius: 4px;
 }
 
 /* === Responsive (larger screens) === */
