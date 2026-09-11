@@ -1071,3 +1071,125 @@ body {
     font-size: 26px;
   }
 }
+
+/* === 落地页：材料提交方法 === */
+.hero-stamp {
+  font-size: 12px;
+  color: #B0A090;
+  margin: -10px 0 20px;
+}
+
+.sub-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin: 32px 0 16px;
+}
+
+.watermark-tip {
+  font-size: 13px;
+  color: #8A6A20;
+  background: #FFF9E6;
+  border-left: 3px solid #F0C36D;
+  border-radius: 6px;
+  padding: 10px 12px;
+  line-height: 1.7;
+}
+
+.warn-line {
+  font-size: 14px;
+  color: #C0392B;
+  background: #FFF0F0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  line-height: 1.7;
+}
+
+/* 水印示例 */
+.wm-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.wm-figure {
+  margin: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.wm-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wm-figure figcaption {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 10px;
+}
+
+/* 表单隐私说明 */
+.form-privacy {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #2C6A5E;
+  background: #F0FAF7;
+  border: 1px solid #C0E5DB;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+/* === 折叠的历史内容 === */
+.fold-area {
+  padding: 8px 0 0;
+}
+
+.fold {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+}
+
+.fold:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.fold > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary);
+  background: #F7FBFA;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold > summary::after {
+  content: '▾';
+  float: right;
+  color: #B0C8C2;
+}
+
+.fold[open] > summary::after {
+  content: '▴';
+}
+
+.fold > .section {
+  padding: 4px 24px 36px;
+}
+
+.fold > .section .section-badge {
+  display: none;
+}

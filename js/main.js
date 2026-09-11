@@ -6,42 +6,46 @@
   var musicBtn = document.getElementById('music-btn');
   var musicPlaying = false;
 
-  musicBtn.addEventListener('click', function () {
-    if (musicPlaying) {
-      bgm.pause();
-      musicBtn.textContent = '🎵';
-      musicBtn.classList.remove('playing');
-      musicPlaying = false;
-    } else {
-      bgm.play().then(function () {
-        musicBtn.textContent = '🎶';
-        musicBtn.classList.add('playing');
-        musicPlaying = true;
-      }).catch(function () {
-        musicBtn.textContent = '🔇';
-        setTimeout(function () {
-          musicBtn.textContent = '🎵';
-        }, 1500);
-      });
-    }
-  });
+  if (bgm && musicBtn) {
+    musicBtn.addEventListener('click', function () {
+      if (musicPlaying) {
+        bgm.pause();
+        musicBtn.textContent = '🎵';
+        musicBtn.classList.remove('playing');
+        musicPlaying = false;
+      } else {
+        bgm.play().then(function () {
+          musicBtn.textContent = '🎶';
+          musicBtn.classList.add('playing');
+          musicPlaying = true;
+        }).catch(function () {
+          musicBtn.textContent = '🔇';
+          setTimeout(function () {
+            musicBtn.textContent = '🎵';
+          }, 1500);
+        });
+      }
+    });
+  }
 
-  // --- 表单提交 ---
+  // --- 留资表单 ---
   var form = document.getElementById('signup-form');
+  if (!form) return;
+
   var submitBtn = document.getElementById('submit-btn');
   var btnText = submitBtn.querySelector('.btn-text');
   var btnLoading = submitBtn.querySelector('.btn-loading');
   var formSuccess = document.getElementById('form-success');
   var formError = document.getElementById('form-error');
   var formErrorMsg = document.getElementById('form-error-msg');
-  var formFields = form.querySelectorAll('.form-group, .submit-btn');
+  var formFields = form.querySelectorAll('.form-group, .submit-btn, .form-privacy');
 
   function isValidPhone(phone) {
     return /^1[3-9]\d{9}$/.test(phone);
   }
 
   function showError(msg) {
-    formErrorMsg.textContent = msg || '提交失败，请稍后重试。如多次失败请联系群管理员。';
+    formErrorMsg.textContent = msg || '提交失败，请稍后重试。如果一直失败，请在群里喊一声。';
     formError.style.display = 'block';
     setTimeout(function () {
       formError.style.display = 'none';
@@ -66,39 +70,20 @@
     formSuccess.style.display = 'none';
     formError.style.display = 'none';
 
-    var name = document.getElementById('name').value.trim();
-    var phase = document.getElementById('phase').value;
-    var building = document.getElementById('building').value.trim();
-    var unit = document.getElementById('unit').value.trim();
     var room = document.getElementById('room').value.trim();
     var phone = document.getElementById('phone').value.trim();
-    var willingnessEl = document.querySelector('input[name="willingness"]:checked');
+    var name = document.getElementById('name').value.trim();
 
-    if (!name) { alert('请输入姓名'); return; }
-    if (!phase) { alert('请选择期数'); return; }
-    if (!unit) { alert('请输入单元号'); return; }
-    if (!room) { alert('请输入门牌号'); return; }
-    if (!phone) { alert('请输入手机号码'); return; }
+    if (!room) { alert('请填写房号'); return; }
+    if (!phone) { alert('请填写手机号'); return; }
     if (!isValidPhone(phone)) { alert('请输入正确的11位手机号码'); return; }
-    if (!willingnessEl) { alert('请选择您的参与意愿'); return; }
 
-    var willingness = willingnessEl.value;
-    var willingnessLabel = willingnessEl.parentNode.querySelector('.radio-label').textContent.trim();
-    var buildingFull = building ? phase + '-' + building : phase;
-    var fullAddress = building
-      ? buildingFull + '栋-' + unit + '单元-' + room
-      : buildingFull + '-' + unit + '单元-' + room;
-
+    // 表单只收联系方式，证件材料一律由邻居自己发给网格长
     var payload = {
-      name: name,
-      phase: phase,
-      building: buildingFull,
-      unit: unit,
       room: room,
-      address: fullAddress,
+      address: room,
+      name: name,
       phone: phone,
-      willingness: willingness,
-      willingnessLabel: willingnessLabel,
       submittedAt: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
     };
 
@@ -124,7 +109,7 @@
           showError(result.data.message);
         }
       })
-      .catch(function (err) {
+      .catch(function () {
         setLoading(false);
         showError('网络连接失败，请稍后重试');
       });

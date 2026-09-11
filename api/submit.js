@@ -60,6 +60,16 @@ async function getAccessToken() {
 }
 
 /**
+ * 空值不写进飞书：单选、日期这类字段收到空字符串会导致整条写入失败
+ */
+function setField(fields, key, value) {
+  if (value === undefined || value === null) return;
+  var v = typeof value === 'string' ? value.trim() : value;
+  if (v === '') return;
+  fields[key] = v;
+}
+
+/**
  * 向多维表格新增一条记录
  */
 async function addRecord(token, fields) {
@@ -125,23 +135,23 @@ module.exports = async function handler(req, res) {
 
     var body = req.body;
 
-    // 简单校验
-    if (!body.name || !body.building || !body.unit || !body.room || !body.phone) {
-      res.status(400).json({ success: false, message: '请填写必填字段' });
+    // 简单校验：只收联系方式，房号 + 手机号必填
+    if (!body.room || !body.phone) {
+      res.status(400).json({ success: false, message: '请填写房号和手机号' });
       return;
     }
 
     // 构建飞书表格字段
     var fields = {};
-    fields[FIELD_MAP.name] = body.name;
-    fields[FIELD_MAP.phase] = body.phase;
-    fields[FIELD_MAP.building] = body.building;
-    fields[FIELD_MAP.unit] = body.unit;
-    fields[FIELD_MAP.room] = body.room;
-    fields[FIELD_MAP.address] = body.address;
-    fields[FIELD_MAP.phone] = body.phone;
-    fields[FIELD_MAP.willingnessLabel] = body.willingnessLabel || body.willingness;
-    fields[FIELD_MAP.submittedAt] = body.submittedAt;
+    setField(fields, FIELD_MAP.name, body.name);
+    setField(fields, FIELD_MAP.phase, body.phase);
+    setField(fields, FIELD_MAP.building, body.building);
+    setField(fields, FIELD_MAP.unit, body.unit);
+    setField(fields, FIELD_MAP.room, body.room);
+    setField(fields, FIELD_MAP.address, body.address || body.room);
+    setField(fields, FIELD_MAP.phone, body.phone);
+    setField(fields, FIELD_MAP.willingnessLabel, body.willingnessLabel || body.willingness);
+    setField(fields, FIELD_MAP.submittedAt, body.submittedAt || new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }));
 
     // 获取token并写入
     var token = await getAccessToken();

@@ -54,6 +54,16 @@ async function getAccessToken(env) {
   return cachedToken;
 }
 
+/**
+ * 空值不写进飞书：单选、日期这类字段收到空字符串会导致整条写入失败
+ */
+function setField(fields, key, value) {
+  if (value === undefined || value === null) return;
+  const v = typeof value === 'string' ? value.trim() : value;
+  if (v === '') return;
+  fields[key] = v;
+}
+
 async function addRecord(token, fields, env) {
   const url = `https://open.feishu.cn/open-apis/bitable/v1/apps/${env.FEISHU_APP_TOKEN}/tables/${env.FEISHU_TABLE_ID}/records`;
 
@@ -106,22 +116,22 @@ export async function onRequest(context) {
 
     const body = await request.json();
 
-    if (!body.name || !body.unit || !body.room || !body.phone) {
-      return new Response(JSON.stringify({ success: false, message: '请填写必填字段' }), {
+    if (!body.room || !body.phone) {
+      return new Response(JSON.stringify({ success: false, message: '请填写房号和手机号' }), {
         status: 400, headers
       });
     }
 
     const fields = {};
-    fields[FIELD_MAP.name] = body.name;
-    fields[FIELD_MAP.phase] = body.phase || '';
-    fields[FIELD_MAP.building] = body.building || '';
-    fields[FIELD_MAP.unit] = body.unit;
-    fields[FIELD_MAP.room] = body.room;
-    fields[FIELD_MAP.address] = body.address;
-    fields[FIELD_MAP.phone] = body.phone;
-    fields[FIELD_MAP.willingnessLabel] = body.willingnessLabel || body.willingness;
-    fields[FIELD_MAP.submittedAt] = body.submittedAt;
+    setField(fields, FIELD_MAP.name, body.name);
+    setField(fields, FIELD_MAP.phase, body.phase);
+    setField(fields, FIELD_MAP.building, body.building);
+    setField(fields, FIELD_MAP.unit, body.unit);
+    setField(fields, FIELD_MAP.room, body.room);
+    setField(fields, FIELD_MAP.address, body.address || body.room);
+    setField(fields, FIELD_MAP.phone, body.phone);
+    setField(fields, FIELD_MAP.willingnessLabel, body.willingnessLabel || body.willingness);
+    setField(fields, FIELD_MAP.submittedAt, body.submittedAt || new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }));
 
     const token = await getAccessToken(env);
     await addRecord(token, fields, env);

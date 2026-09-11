@@ -17,6 +17,32 @@ const FIELD_MAP = {
 let cachedToken = null;
 let tokenExpireAt = 0;
 
+/**
+ * /debug 只对带密钥的请求开放。
+ * 没有配置 DEBUG_KEY 时一律关闭（返回 404），避免线上裸奔。
+ */
+function isDebugAllowed(request, env) {
+  if (!env.DEBUG_KEY) return false;
+  const url = new URL(request.url);
+  const key = url.searchParams.get('key') || request.headers.get('X-Debug-Key') || '';
+  return key !== '' && key === env.DEBUG_KEY;
+}
+
+/** 诊断输出里不出现完整的 app_token / table_id */
+function maskSecret(value) {
+  if (!value) return 'MISSING';
+  if (value.length <= 8) return '***';
+  return value.substring(0, 4) + '***' + value.substring(value.length - 4);
+}
+
+/** 空值不写进飞书：单选、日期这类字段收到空字符串会导致整条写入失败 */
+function setField(fields, key, value) {
+  if (value === undefined || value === null) return;
+  const v = typeof value === 'string' ? value.trim() : value;
+  if (v === '') return;
+  fields[key] = v;
+}
+
 async function getAccessToken(env) {
   const now = Date.now();
   if (cachedToken && now < tokenExpireAt) return cachedToken;
@@ -45,7 +71,15 @@ export default {
     const pathname = url.pathname;
 
     // API 路由
-    if (pathname === '/api/submit' || pathname === '/debug') {
+    if (pathname === '/api/submit') {
+      return handleAPI(request, env);
+    }
+
+    // 诊断端点：必须配置 DEBUG_KEY 且密钥正确，否则当作不存在
+    if (pathname === '/debug') {
+      if (!isDebugAllowed(request, env)) {
+        return new Response('Not Found', { status: 404 });
+      }
       return handleAPI(request, env);
     }
 
@@ -85,8 +119,8 @@ async function handleAPI(request, env) {
       debug.env = {
         FEISHU_APP_ID: env.FEISHU_APP_ID ? env.FEISHU_APP_ID.substring(0, 8) + '***' : 'MISSING',
         FEISHU_APP_SECRET: env.FEISHU_APP_SECRET ? '***已配置***' : 'MISSING',
-        FEISHU_APP_TOKEN: env.FEISHU_APP_TOKEN || 'MISSING',
-        FEISHU_TABLE_ID: env.FEISHU_TABLE_ID || 'MISSING'
+        FEISHU_APP_TOKEN: maskSecret(env.FEISHU_APP_TOKEN),
+        FEISHU_TABLE_ID: maskSecret(env.FEISHU_TABLE_ID)
       };
 
       if (!env.FEISHU_APP_ID || !env.FEISHU_APP_SECRET || !env.FEISHU_APP_TOKEN || !env.FEISHU_TABLE_ID) {
@@ -190,22 +224,22 @@ async function handleAPI(request, env) {
 
     const body = await request.json();
 
-    if (!body.name || !body.unit || !body.room || !body.phone) {
-      return new Response(JSON.stringify({ success: false, message: '请填写必填字段' }), {
+    if (!body.room || !body.phone) {
+      return new Response(JSON.stringify({ success: false, message: '请填写房号和手机号' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
     const fields = {};
-    fields[FIELD_MAP.name] = body.name;
-    fields[FIELD_MAP.building] = body.building || '';
-    fields[FIELD_MAP.unit] = body.unit;
-    fields[FIELD_MAP.room] = body.room;
-    fields[FIELD_MAP.address] = body.address;
-    fields[FIELD_MAP.phone] = body.phone;
-    fields[FIELD_MAP.willingnessLabel] = body.willingnessLabel || body.willingness;
-    fields[FIELD_MAP.submittedAt] = body.submittedAt;
+    setField(fields, FIELD_MAP.name, body.name);
+    setField(fields, FIELD_MAP.building, body.building);
+    setField(fields, FIELD_MAP.unit, body.unit);
+    setField(fields, FIELD_MAP.room, body.room);
+    setField(fields, FIELD_MAP.address, body.address || body.room);
+    setField(fields, FIELD_MAP.phone, body.phone);
+    setField(fields, FIELD_MAP.willingnessLabel, body.willingnessLabel || body.willingness);
+    setField(fields, FIELD_MAP.submittedAt, body.submittedAt || new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }));
 
     const token = await getAccessToken(env);
     await fetch(`https://open.feishu.cn/open-apis/bitable/v1/apps/${env.FEISHU_APP_TOKEN}/tables/${env.FEISHU_TABLE_ID}/records`, {

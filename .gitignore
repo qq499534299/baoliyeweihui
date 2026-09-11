@@ -2,3 +2,9 @@ node_modules/
 .env
 .DS_Store
 docs
+
+# 以下三个目录含邻居的真实证件、姓名、电话和微信联系方式。
+# 本仓库会部署到 Vercel / Cloudflare Pages，一旦提交就等于公开发布，且 git 历史删不干净。
+assets/乡政府工作过程表/
+assets/牵头人微信/
+assets/网格长微信/
