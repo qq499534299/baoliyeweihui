@@ -133,11 +133,6 @@ body {
   border-radius: 8px;
   background: rgba(13, 123, 107, 0.05);
 }
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 32px;
-}
 
 .hero-icon-item {
   display: flex;
@@ -1113,7 +1108,8 @@ body {
   gap: 18px;
 }
 
-.wm-figure {
+.wm-figure,
+.shot-figure {
   margin: 0;
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -1122,17 +1118,24 @@ body {
   overflow: hidden;
 }
 
-.wm-figure img {
+.wm-figure img,
+.shot-figure img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.wm-figure figcaption {
+.wm-figure figcaption,
+.shot-figure figcaption {
   font-size: 14px;
   color: var(--text-secondary);
   text-align: center;
   padding: 10px;
+}
+
+/* 备选方式里的位置截图，跟上面的正文拉开一点 */
+.notice-body .shot-figure {
+  margin-top: 14px;
 }
 
 /* 表单隐私说明 */
